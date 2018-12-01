@@ -8,7 +8,7 @@ defmodule DropboxEx do
     upload_url = client.upload_url || default_upload_url()
 
     headers = Map.merge(headers, headers(client))
-    response = HTTPoison.post!("#{upload_url()}#{url}", data, headers)
+    response = HTTPoison.post!("#{upload_url}#{url}", data, headers)
     response
     |> download_response
   end

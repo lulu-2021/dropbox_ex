@@ -12,11 +12,12 @@ defmodule DropboxEx do
 
     IO.puts "\n---------\n"
     IO.inspect headers
-    IO.inspect @upload_url
+    IO.inspect upload_url()
+    IO.inspect url
     IO.inspect data
     IO.puts "\n---------\n"
 
-    response = HTTPoison.post!("#{@upload_url}#{url}", data, headers)
+    response = HTTPoison.post!("#{upload_url()}#{url}", data, headers)
 
     IO.inspect response
 
@@ -42,4 +43,20 @@ defmodule DropboxEx do
   defp headers(client), do: %{ "Authorization" => "Bearer #{client.access_token}" }
 
   defp json_headers, do: %{ "Content-Type" => "application/json" }
+
+  defp base_url() do
+    url = @base_url
+    case url do
+      nil -> "https://api.dropboxapi.com/2/"
+      _ -> url
+    end
+  end
+
+  defp upload_url do
+    url = @upload_url
+    case url do
+      nil -> "https://content.dropboxapi.com/2/"
+      _ -> url
+    end
+  end
 end

@@ -9,7 +9,11 @@ defmodule DropboxEx do
 
   def download_request(client, url, data, headers) do
     headers = Map.merge(headers, headers(client))
-    HTTPoison.post!("#{@upload_url}#{url}", data, headers) |> download_response
+    #response = HTTPoison.post!("#{@upload_url}#{url}", data, headers)
+    response = HTTPoison.post!("#{@base_url}#{url}", data, headers)
+
+    response
+    |> download_response
   end
 
     def download_response(response) do

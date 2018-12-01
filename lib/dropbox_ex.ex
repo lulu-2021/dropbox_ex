@@ -9,14 +9,7 @@ defmodule DropboxEx do
 
   def download_request(client, url, data, headers) do
     headers = Map.merge(headers, headers(client))
-
-    IO.puts "\n\n--------------- URL:"
-    IO.inspect upload_url
-    IO.inspect url
-    IO.puts "\n\n---------------"
-
     response = HTTPoison.post!("#{upload_url()}#{url}", data, headers)
-
     response
     |> download_response
   end
@@ -24,11 +17,6 @@ defmodule DropboxEx do
   def download_response(response) do
     case response do
       {:ok, %{body: body, headers: headers, status_code: 200}} ->
-
-        IO.puts "\n\nFile body:"
-        IO.inspect body
-        IO.puts "\n\n-----------------\n\n"
-
         {:ok, %{file: body, headers: get_header(headers, "dropbox_api_result") |> Poison.decode}}
       _ -> response
     end

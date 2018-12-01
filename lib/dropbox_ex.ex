@@ -9,23 +9,7 @@ defmodule DropboxEx do
 
   def download_request(client, url, data, headers) do
     headers = Map.merge(headers, headers(client))
-
-    IO.puts "\n---------\n"
-    IO.inspect headers
-
-    IO.puts "\n\n"
-    IO.puts "upload url:"
-    IO.inspect upload_url()
-    IO.puts "url:"
-    IO.inspect url
-    IO.puts "\n\n"
-
-    IO.inspect data
-    IO.puts "\n---------\n"
-
     response = HTTPoison.post!("#{upload_url()}#{url}", data, headers)
-
-    IO.inspect response
 
     response
     |> download_response
@@ -56,6 +40,7 @@ defmodule DropboxEx do
       nil -> "https://api.dropboxapi.com/2/"
       _ -> url
     end
+    IO.inspect url
     "https://api.dropboxapi.com/2/"
   end
 
@@ -65,6 +50,7 @@ defmodule DropboxEx do
       nil -> "https://content.dropboxapi.com/2/"
       _ -> url
     end
+    IO.inspect url
     "https://content.dropboxapi.com/2/"
   end
 end

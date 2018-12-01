@@ -21,9 +21,14 @@ defmodule DropboxEx do
     |> download_response
   end
 
-    def download_response(response) do
+  def download_response(response) do
     case response do
       {:ok, %{body: body, headers: headers, status_code: 200}} ->
+
+        IO.puts "\n\nFile body:"
+        IO.inspect body
+        IO.puts "\n\n-----------------\n\n"
+
         {:ok, %{file: body, headers: get_header(headers, "dropbox_api_result") |> Poison.decode}}
       _ -> response
     end

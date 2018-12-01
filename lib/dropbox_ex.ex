@@ -4,10 +4,9 @@ defmodule DropboxEx do
   """
   use HTTPoison.Base
 
-  @base_url Application.get_env(:dropbox_ex, :base_url)
-  @upload_url Application.get_env(:dropbox_ex, :upload_url)
-
   def download_request(client, url, data, headers) do
+    upload_url = client.upload_url || default_upload_url()
+
     headers = Map.merge(headers, headers(client))
     response = HTTPoison.post!("#{upload_url()}#{url}", data, headers)
     response
@@ -33,23 +32,7 @@ defmodule DropboxEx do
 
   defp json_headers, do: %{ "Content-Type" => "application/json" }
 
-  defp base_url() do
-    url = @base_url
-    case url do
-      nil -> "https://api.dropboxapi.com/2/"
-      _ -> url
-    end
-    IO.inspect url
-    "https://api.dropboxapi.com/2/"
-  end
+  defp default_base_url, do: "https://api.dropboxapi.com/2/"
 
-  defp upload_url do
-    url = @upload_url
-    case url do
-      nil -> "https://content.dropboxapi.com/2/"
-      _ -> url
-    end
-    IO.inspect url
-    "https://content.dropboxapi.com/2/"
-  end
+  defp default_upload_url, do: "https://content.dropboxapi.com/2/"
 end

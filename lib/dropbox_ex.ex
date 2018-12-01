@@ -12,8 +12,14 @@ defmodule DropboxEx do
 
     IO.puts "\n---------\n"
     IO.inspect headers
+
+    IO.puts "\n\n"
+    IO.puts "upload url:"
     IO.inspect upload_url()
+    IO.puts "url:"
     IO.inspect url
+    IO.puts "\n\n"
+
     IO.inspect data
     IO.puts "\n---------\n"
 
@@ -50,6 +56,7 @@ defmodule DropboxEx do
       nil -> "https://api.dropboxapi.com/2/"
       _ -> url
     end
+    "https://api.dropboxapi.com/2/"
   end
 
   defp upload_url do
@@ -58,5 +65,6 @@ defmodule DropboxEx do
       nil -> "https://content.dropboxapi.com/2/"
       _ -> url
     end
+    "https://content.dropboxapi.com/2/"
   end
 end

@@ -32,6 +32,14 @@ defmodule DropboxEx do
     end
   end
 
+  def upload_response(%HTTPoison.Response{status_code: 200, body: body}), do: Poison.decode!(body)
+  def upload_response(%HTTPoison.Response{status_code: status_code, body: body }) do
+    cond do
+    status_code in 400..599 ->
+      {{:status_code, status_code}, JSON.decode(body)}
+    end
+  end
+
   defp get_header(headers, key) do
     headers
     |> Enum.filter(fn({k, _}) -> k == key end)

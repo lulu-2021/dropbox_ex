@@ -5,7 +5,7 @@ defmodule DropboxEx do
   use HTTPoison.Base
 
   def download_request(client, url, data, headers) do
-    upload_url = client.upload_url || default_upload_url()
+    upload_url = default_upload_url()
 
     headers = Map.merge(headers, headers(client))
     response = HTTPoison.post!("#{upload_url}#{url}", data, headers)
